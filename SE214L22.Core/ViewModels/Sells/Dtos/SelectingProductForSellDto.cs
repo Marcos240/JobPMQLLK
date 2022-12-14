@@ -14,5 +14,6 @@ namespace SE214L22.Core.ViewModels.Sells.Dtos
         public string Name { get; set; }
         public int PriceOut { get; set; }
         public int SelectedNumber { get => _selectedNumber; set { _selectedNumber = value; OnPropertyChanged(); } }
+        public int TotalPrice { get; set; }
     }
 }
