@@ -9,7 +9,7 @@
         xmlns:Sells="clr-namespace:SE214L22.Core.ViewModels.Sells;assembly=SE214L22.Core"
         mc:Ignorable="d" 
         DataContext="{StaticResource SellViewModel}"
-        Height="800" Width="500" ResizeMode="NoResize" WindowStyle="None" FontFamily="Roboto" WindowStartupLocation="CenterScreen"
+        Height="680" Width="500" ResizeMode="NoResize" WindowStyle="None" FontFamily="Roboto" WindowStartupLocation="CenterScreen"
         >
 
     <ScrollViewer>
