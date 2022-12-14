@@ -55,7 +55,44 @@ namespace SE214L22.Data.Repository
                 return query.Any() ? query.Sum(i => i.Total) : 0;
             }
         }
-        
+
+        public ReportByDayDto GetBestSaleReport(DateTime day1, DateTime day2)
+        {
+            using (var ctx = new AppDbContext())
+            {
+                var report = new ReportByDayDto();
+
+                // day revenue
+                var query = ctx.Invoices
+                   .Where(i => DbFunctions.TruncateTime(i.CreationTime) >= day1.Date).Where(i => DbFunctions.TruncateTime(i.CreationTime) <= day2.Date);
+                report.TotalRevenue = query.Any() ? query.Sum(i => i.Total) : 0;
+
+                // product sales
+                var date = day1.Date.ToString("MM/dd/yyyy");
+                var nextDate = day2.AddDays(1).ToString("MM/dd/yyyy");
+                var rawQueryScript =
+                    $"select f.Id, f.Name, f.CategoryName, f.PriceOut, sum(f.Number) as Number, sum(f.Total) as Total from " +
+                    $"( " +
+                    $"select ip.ProductId as Id, p.Name as Name, c.Name as CategoryName, ip.Number as Number, p.PriceOut as PriceOut, sum(ip.Number * p.PriceOut) as Total " +
+                    $"from Invoices as i " +
+                    $"join InvoiceProducts as ip on ip.InvoiceId = i.Id " +
+                    $"join Products as p on ip.ProductId = p.Id " +
+                    $"join Categories as c on p.CategoryId = c.Id " +
+                    $"where '{date}' <= i.CreationTime and i.CreationTime < '{nextDate}' " +
+                    $"group by ip.Id, ip.ProductId, p.Name, c.Name, ip.Number, p.PriceOut " +
+                    $") as f " +
+                    $"group by f.Id, f.Name, f.CategoryName, f.PriceOut";
+
+                report.Products = ctx.Database.SqlQuery<ProductReportByDayDto>(rawQueryScript).OrderByDescending(x => x.Number).ToList();
+
+                var count = 1;
+                foreach (var item in report.Products)
+                    item.Index = count++;
+
+                return report;
+            }
+        }
+
         public ReportByDayDto GetReportByDay(DateTime day)
         {
             using (var ctx = new AppDbContext())
