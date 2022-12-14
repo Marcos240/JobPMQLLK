@@ -396,7 +396,7 @@
                     </Grid>
                 </Grid>
             </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Đơn nhập hàng">
+            <controls:MetroTabItem Header="Đơn nhập hàng" Height="40">
                 <Grid DataContext="{StaticResource ReceiptViewModel}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="68*"></ColumnDefinition>

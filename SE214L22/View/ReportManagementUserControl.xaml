@@ -13,6 +13,233 @@
              d:DesignWidth="800">
     <Grid>
         <controls:MetroAnimatedTabControl x:Name="AnimatedTabControl">
+            <controls:MetroTabItem Header="Báo cáo danh sách sản phẩm đã bán" Height="40">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                            Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Text="Chọn chế độ tìm kiếm"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+                            
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchMode"
+                                    Loaded="searchMode_Loaded"
+                                    SelectionChanged="searchMode_SelectionChanged"
+                                    materialDesign:HintAssist.Hint="Chọn chế độ tìm kiếm"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+                        
+                        <!--Chọn báo cáo theo ngày-->
+                        <StackPanel
+                            Name="searchDayArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn ngày"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="200">
+                                <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                    Name="searchDay"
+                                    materialDesign:HintAssist.Hint="Chọn ngày"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Height="35.2" >
+
+                                </DatePicker>
+                            </Border>
+
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo tháng-->
+                        <StackPanel
+                            Name="searchMonthArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn tháng"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchMonth"
+                                    Loaded="searchMonth_Loaded"
+                                    materialDesign:HintAssist.Hint="Chọn tháng báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo quý-->
+                        <StackPanel
+                            Name="searchQuaterArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchQuater"
+                                    Loaded="searchQuater_Loaded"
+                                    materialDesign:HintAssist.Hint="Chọn quý báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo năm-->
+                        <StackPanel
+                            Name="searchYearArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchYear"
+                                    Loaded="searchYear_Loaded"
+                                    materialDesign:HintAssist.Hint="Chọn quý báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Background="DarkGreen"
+                                    BorderThickness="0"
+                                    Command="{Binding CDayReportToExcel}"
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Height="36"
+                                    Padding="5"
+                                    Width="150"
+                                    materialDesign:ButtonAssist.CornerRadius="10"
+                                    ToolTip="Xuất báo cáo ra file Excel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Xuất Báo Cáo"
+                                               VerticalAlignment="Center"
+                                               Margin="0 0 5 0" />
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                             Kind="FileExcel"
+                                                             Width="20"
+                                                             Height="20" />
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+                    <materialDesign:Card Grid.Row="1"
+                                             Padding="5"
+                                             Margin="10">
+                        <GroupBox Header="Thống kê sản phẩm đã bán"
+                                      Margin="5">
+                            <DataGrid ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}"
+                                          AutoGenerateColumns="False"
+                                          FontWeight="Normal"
+                                          CanUserAddRows="False"
+                                          controls:DataGridHelper.ColumnHeaderPadding="10,0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="STT" Width="100"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding Index}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Tên mặt hàng" Width="400"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding Name}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Loại mặt hàng" Width="200"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding CategoryName}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Số lượng"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding Number}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </materialDesign:Card>
+                </Grid>
+            </controls:MetroTabItem>
             <controls:MetroTabItem Header="Doanh thu theo ngày">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -51,7 +278,7 @@
                             <TextBlock Text="Doanh thu:"
                                        FontSize="15"
                                        Margin="0 45 0 0"></TextBlock>
-                            <TextBox Text="{Binding TotalDayRevenue}"
+                            <TextBox Text="{Binding TotalDayRevenue, StringFormat={}{0:#,##0} đ}"
                                      Margin="20 0 0 0"
                                      Padding="10 0 10 0"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -92,10 +319,10 @@
                                     <DataGridTextColumn Header="STT"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Index}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Mã sản phẩm"
+                                    <DataGridTextColumn Header="Mã sản phẩm" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Id}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Tên mặt hàng"
+                                    <DataGridTextColumn Header="Tên mặt hàng" Width="300"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Name}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Loại mặt hàng"
@@ -106,10 +333,13 @@
                                                         Binding="{Binding Number}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Đơn giá"
                                                         IsReadOnly="True"
-                                                        Binding="{Binding PriceOut}"></DataGridTextColumn>
+                                                        Binding="{Binding PriceOut, StringFormat={}{0:#,##0} đ}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Thành tiền"
                                                         IsReadOnly="True"
-                                                        Binding="{Binding Total}"></DataGridTextColumn>
+                                                        Binding="{Binding Total, StringFormat={}{0:#,##0} đ}"
+                                                        >
+                                                        
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </GroupBox>
@@ -153,7 +383,7 @@
                             <TextBlock Text="Tổng doanh thu:"
                                        FontSize="15"
                                        Margin="0 45 0 0"></TextBlock>
-                            <TextBox Text="{Binding TotalRevenue}"
+                            <TextBox Text="{Binding TotalRevenue, StringFormat={}{0:#,##0} đ}"
                                      Margin="20 0 0 0"
                                      Padding="10 0 10 0"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -164,7 +394,7 @@
                             <TextBlock Text="Tổng lợi nhuận:"
                                        FontSize="15"
                                        Margin="0 45 0 0"></TextBlock>
-                            <TextBox Text="{Binding TotalProfit}"
+                            <TextBox Text="{Binding TotalProfit, StringFormat={}{0:#,##0} đ}"
                                      Margin="20 0 0 0"
                                      Padding="10 0 10 0"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -203,18 +433,18 @@
                                       controls:DataGridHelper.ColumnHeaderPadding="10,0"
                                       Grid.ColumnSpan="2">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="STT"
+                                    <DataGridTextColumn Header="STT" Width="100"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Index}" />
-                                    <DataGridTextColumn Header="Ngày"
+                                    <DataGridTextColumn Header="Ngày" Width="200"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Day, StringFormat='dd/MM/yyyy'}" />
-                                    <DataGridTextColumn Header="Doanh thu"
+                                    <DataGridTextColumn Header="Doanh thu" Width="200"
                                                         IsReadOnly="True"
-                                                        Binding="{Binding TotalRevenue}" />
+                                                        Binding="{Binding TotalRevenue, StringFormat={}{0:#,##0} đ}" />
                                     <DataGridTextColumn Header="Lợi nhuận"
                                                         IsReadOnly="True"
-                                                        Binding="{Binding TotalProfit}" />
+                                                        Binding="{Binding TotalProfit, StringFormat={}{0:#,##0} đ}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </GroupBox>
@@ -222,7 +452,7 @@
                 </Grid>
             </controls:MetroTabItem>
         </controls:MetroAnimatedTabControl>
-        <Grid Grid.RowSpan="2" DataContext="{StaticResource SessionViewModel}" Background="#fff" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <!--<Grid Grid.RowSpan="2" DataContext="{StaticResource SessionViewModel}" Background="#fff" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="../Assets/unauthorized.png" Width="200" Height="200" />
                 <TextBlock FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">Bạn không có quyền truy cập màn hình này! Vui lòng đăng nhập với tài khoản thích hợp!</TextBlock>
@@ -230,6 +460,6 @@
             <Grid.Visibility>
                 <Binding Path="UserPerrmissions" Converter="{StaticResource FeaturePermissionConverter}" ConverterParameter="Report" />
             </Grid.Visibility>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

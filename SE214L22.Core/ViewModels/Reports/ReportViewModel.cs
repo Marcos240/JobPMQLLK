@@ -1,8 +1,10 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Office.Interop.Excel;
 using SE214L22.Core.Services.AppProduct;
+using SE214L22.Core.ViewModels.Reports.Dtos;
 using SE214L22.Shared.Dtos;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +24,12 @@ namespace SE214L22.Core.ViewModels.Reports
         // service
         private readonly InvoiceService _invoiceService;
 
+
         // private fields
+
+        private List<SearchModeDto> _searchModes;
+
+
         private DateTime _selectedDate;
         private int _totalDayRevenue;
         private ObservableCollection<ProductReportByDayDto> _products;
@@ -52,6 +59,17 @@ namespace SE214L22.Core.ViewModels.Reports
                 OnPropertyChanged();
             }
         }
+
+        public List<SearchModeDto> SearchModes
+        {
+            get => _searchModes;
+            set
+            {
+                _searchModes = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<ProductReportByDayDto> Products
         {
             get => _products;
@@ -100,6 +118,7 @@ namespace SE214L22.Core.ViewModels.Reports
             _invoiceService = new InvoiceService();
 
             // init data
+
             SelectedDate = DateTime.Now;
             SelectedMonth = DateTime.Now;
             CDayReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { DayReportToExcel(); });

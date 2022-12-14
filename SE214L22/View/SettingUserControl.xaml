@@ -160,7 +160,7 @@
                     </Grid>
                 </Grid>
             </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Quản lý loại mặt hàng">
+            <controls:MetroTabItem Header="Quản lý loại mặt hàng" Height="40">
                 <Grid DataContext="{StaticResource CategoryViewModel}">
                     <Grid Width="600"
                           Height="400">

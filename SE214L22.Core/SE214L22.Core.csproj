@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\Products\Validations\NameValidation.cs" />
     <Compile Include="ViewModels\Products\Validations\ReturnRateValidation.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\Reports\Dtos\SearchModeDto.cs" />
     <Compile Include="ViewModels\Reports\ReportViewModel.cs" />
     <Compile Include="ViewModels\Sells\Dtos\InvoiceForCreationDto.cs" />
     <Compile Include="ViewModels\Sells\Dtos\ProductForSellDto.cs" />

@@ -84,7 +84,7 @@ namespace SE214L22.Data.Repository
                     $") as f " +
                     $"group by f.Id, f.Name, f.CategoryName, f.PriceOut";
 
-                    report.Products = ctx.Database.SqlQuery<ProductReportByDayDto>(rawQueryScript).ToList();
+                    report.Products = ctx.Database.SqlQuery<ProductReportByDayDto>(rawQueryScript).OrderByDescending(x => x.Number).ToList();
 
                 var count = 1;
                 foreach (var item in report.Products)
