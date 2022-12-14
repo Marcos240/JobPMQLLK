@@ -1,7 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Office.Interop.Excel;
 using SE214L22.Core.Services.AppProduct;
-using SE214L22.Core.ViewModels.Reports.Dtos;
 using SE214L22.Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -27,9 +26,6 @@ namespace SE214L22.Core.ViewModels.Reports
 
         // private fields
 
-        private List<SearchModeDto> _searchModes;
-
-
         private DateTime _selectedDate;
         private int _totalDayRevenue;
         private ObservableCollection<ProductReportByDayDto> _products;
@@ -38,6 +34,62 @@ namespace SE214L22.Core.ViewModels.Reports
         private int _totalRevenue;
         private int _totalProfit;
         private ObservableCollection<ItemReportByMonthDto> _dayStatistics;
+
+        //Report list Product
+        private DateTime _searchDate;
+        private int _searchMonth;
+        private int _searchQuarter;
+        private int _searchYear;
+
+        // public property for best sale product list report
+        public DateTime SearchDate
+        {
+            get => _searchDate;
+            set
+            {
+                _searchDate = value;
+                OnPropertyChanged();
+                LoadBestSaleReport(SearchDate, SearchDate);
+            }
+        }
+        public int  SearchMonth
+        {
+            get => _searchMonth;
+            set
+            {
+                _searchMonth = value;
+                OnPropertyChanged();
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, SearchMonth, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                LoadBestSaleReport(firstDayOfMonth, lastDayOfMonth);
+            }
+        }
+        public int SearchQuarter
+        {
+            get => _searchQuarter;
+            set
+            {
+                _searchQuarter = value;
+                OnPropertyChanged();
+                DateTime firstDayOfQuarter = new DateTime(DateTime.Today.Year, 3*SearchQuarter - 2, 1);
+                DateTime lastDayOfQuarter = firstDayOfQuarter.AddMonths(3).AddDays(-1);
+                LoadBestSaleReport(firstDayOfQuarter, lastDayOfQuarter);
+            }
+        }
+        public int SearchYear
+        {
+            get => _searchYear;
+            set
+            {
+                _searchYear = value;
+                OnPropertyChanged();
+                DateTime firstDay = new DateTime(SearchYear, 1, 1);
+                DateTime lastDay = new DateTime(SearchYear, 12, 31);
+                LoadBestSaleReport(firstDay, lastDay);
+            }
+        }
+
+
 
         // public property
         public DateTime SelectedDate 
@@ -56,16 +108,6 @@ namespace SE214L22.Core.ViewModels.Reports
             set
             {
                 _totalDayRevenue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<SearchModeDto> SearchModes
-        {
-            get => _searchModes;
-            set
-            {
-                _searchModes = value;
                 OnPropertyChanged();
             }
         }
@@ -110,6 +152,7 @@ namespace SE214L22.Core.ViewModels.Reports
         // command
         public ICommand CDayReportToExcel { get; set; }
         public ICommand CMonthReportToExcel { get; set; }
+        public ICommand CBestSaleReportToExcel { get; set; }
         public ReportViewModel()
         {
             if (_instance == null)
@@ -118,11 +161,19 @@ namespace SE214L22.Core.ViewModels.Reports
             _invoiceService = new InvoiceService();
 
             // init data
-
+            SearchDate = DateTime.Now;
             SelectedDate = DateTime.Now;
             SelectedMonth = DateTime.Now;
             CDayReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { DayReportToExcel(); });
             CMonthReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { MonthReportToExcel(); });
+            CBestSaleReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { BestSaleReportToExcel(); });
+        }
+
+        private void LoadBestSaleReport(DateTime date1, DateTime date2)
+        {
+            var reportBestSale = _invoiceService.GetBestSaleReport(date1,date2);
+            Products = new ObservableCollection<ProductReportByDayDto>(reportBestSale.Products);
+            TotalDayRevenue = reportBestSale.TotalRevenue;
         }
 
         private void LoadReportByDay()
@@ -288,6 +339,92 @@ namespace SE214L22.Core.ViewModels.Reports
                 ((Range)reportSheet.Cells[3 + DayStatistics.Count, 1]).Font.Bold = true;
                 ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
                 profitRange.Value2 = "Tổng Lợi Nhuận: " + TotalProfit;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Không thể xuất file excel!" + e.ToString());
+            }
+
+
+        }
+
+        private void BestSaleReportToExcel()
+        {
+            try
+            {
+                Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+                excel.Visible = true;
+                Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+                Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
+
+                for (int j = 0; j < 7; j++)
+                {
+                    Range reportRange = (Range)reportSheet.Cells[1, j + 1];
+                    ((Range)reportSheet.Cells[1, j + 1]).Font.Bold = true;
+                    ((Range)reportSheet.Columns[j + 1]).ColumnWidth = 15;
+                    switch (j)
+                    {
+                        case 0:
+                            reportRange.Value2 = "STT";
+                            break;
+                        case 1:
+                            reportRange.Value2 = "Mã sản phẩm";
+                            break;
+                        case 2:
+                            reportRange.Value2 = "Tên mặt hàng";
+                            break;
+                        case 3:
+                            reportRange.Value2 = "Loại mặt hàng";
+                            break;
+                        case 4:
+                            reportRange.Value2 = "Số lượng";
+                            break;
+                        case 5:
+                            reportRange.Value2 = "Đơn giá";
+                            break;
+                        case 6:
+                            reportRange.Value2 = "Thành tiền";
+                            break;
+
+                    }
+                }
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < Products.Count; j++)
+                    {
+                        Range reportRange = (Range)reportSheet.Cells[j + 2, i + 1];
+                        switch (i)
+                        {
+                            case 0:
+                                reportRange.Value2 = Products[j].Index;
+                                break;
+                            case 1:
+                                reportRange.Value2 = Products[j].Id;
+                                break;
+                            case 2:
+                                reportRange.Value2 = Products[j].Name;
+                                break;
+                            case 3:
+                                reportRange.Value2 = Products[j].CategoryName;
+                                break;
+                            case 4:
+                                reportRange.Value2 = Products[j].Number;
+                                break;
+                            case 5:
+                                reportRange.Value2 = Products[j].PriceOut;
+                                break;
+                            case 6:
+                                reportRange.Value2 = Products[j].Total;
+                                break;
+
+                        }
+                    }
+                }
+                Range revenueRange = (Range)reportSheet.Cells[2 + Products.Count, 1];
+                ((Range)reportSheet.Cells[2 + Products.Count, 1]).Font.Bold = true;
+                ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
+                revenueRange.Value2 = "Tổng Doanh Thu: " + TotalRevenue;
 
             }
             catch (Exception e)

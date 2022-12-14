@@ -77,7 +77,7 @@
                                 Padding="0 0 4 0"
                                 VerticalAlignment="Center"
                                 Width="200">
-                                <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                <DatePicker SelectedDate="{Binding SearchDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
                                     Name="searchDay"
                                     materialDesign:HintAssist.Hint="Chọn ngày"
                                     BorderThickness="0"
@@ -114,6 +114,7 @@
                                 <ComboBox 
                                     Name="searchMonth"
                                     Loaded="searchMonth_Loaded"
+                                    SelectedItem ="{Binding SearchMonth , Mode=TwoWay}"
                                     materialDesign:HintAssist.Hint="Chọn tháng báo cáo"
                                     BorderThickness="0"
                                     Margin="4 0 0 0"
@@ -147,6 +148,7 @@
                                 <ComboBox 
                                     Name="searchQuater"
                                     Loaded="searchQuater_Loaded"
+                                    SelectedItem ="{Binding SearchQuarter , Mode=TwoWay}"
                                     materialDesign:HintAssist.Hint="Chọn quý báo cáo"
                                     BorderThickness="0"
                                     Margin="4 0 0 0"
@@ -180,7 +182,8 @@
                                 <ComboBox 
                                     Name="searchYear"
                                     Loaded="searchYear_Loaded"
-                                    materialDesign:HintAssist.Hint="Chọn quý báo cáo"
+                                    SelectedItem ="{Binding SearchYear , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn năm báo cáo"
                                     BorderThickness="0"
                                     Margin="4 0 0 0"
                                     FontSize="14"
@@ -191,10 +194,10 @@
 
                         <Button Background="DarkGreen"
                                     BorderThickness="0"
-                                    Command="{Binding CDayReportToExcel}"
+                                    Command="{Binding CBestSaleReportToExcel}"
                                     Grid.Column="2"
                                     Grid.Row="0"
-                                    Height="36"
+                                    Height="42"
                                     Padding="5"
                                     Width="150"
                                     materialDesign:ButtonAssist.CornerRadius="10"
@@ -234,6 +237,12 @@
                                     <DataGridTextColumn Header="Số lượng"
                                                             IsReadOnly="True"
                                                             Binding="{Binding Number}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Đơn giá"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding PriceOut, StringFormat={}{0:#,##0} đ}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Thành tiền"
+                                    IsReadOnly="True"
+                                    Binding="{Binding Total, StringFormat={}{0:#,##0} đ}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </GroupBox>
@@ -289,7 +298,7 @@
                                 Command="{Binding CDayReportToExcel}"
                                 Grid.Column="2"
                                 Grid.Row="0"
-                                Height="36"
+                                Height="42"
                                 Padding="5"
                                 Width="150"
                                 materialDesign:ButtonAssist.CornerRadius="10"
@@ -404,7 +413,7 @@
                                 BorderThickness="0"
                                 Command="{Binding CMonthReportToExcel}"
                                 Grid.Column="3"
-                                Height="36"
+                                Height="42"
                                 Padding="5"
                                 Width="150"
                                 materialDesign:ButtonAssist.CornerRadius="10"

@@ -90,12 +90,12 @@ namespace SE214L22.View
             {
                 searchMonth.Items.Add(i);
             }
-            searchMonth.SelectedIndex = DateTime.Today.Month - 1;
+            //searchMonth.SelectedIndex = DateTime.Today.Month - 1;
         }
 
         private void searchDay_Loaded(object sender, RoutedEventArgs e)
         {
-            searchDay.SelectedDate= DateTime.Today;
+            searchDay.SelectedDate = DateTime.Now;
         }
 
         private void searchQuater_Loaded(object sender, RoutedEventArgs e)
@@ -105,7 +105,7 @@ namespace SE214L22.View
             {
                 searchQuater.Items.Add(i);
             }
-            searchQuater.SelectedIndex = (DateTime.Today.Month + 2)/3 - 1;
+            //searchQuater.SelectedIndex = (DateTime.Today.Month + 2)/3 - 1;
         }
 
         private void searchYear_Loaded(object sender, RoutedEventArgs e)
@@ -115,7 +115,7 @@ namespace SE214L22.View
             {
                 searchYear.Items.Add(i);
             }
-            searchYear.SelectedIndex = 0;
+            //searchYear.SelectedIndex = 0;
         }
     }
 }

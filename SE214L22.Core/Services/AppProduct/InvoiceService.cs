@@ -34,6 +34,11 @@ namespace SE214L22.Core.Services.AppProduct
             return _invoiceRepository.GetReportByDay(day);
         }
 
+        public ReportByDayDto GetBestSaleReport(DateTime day1, DateTime day2)
+        {
+            return _invoiceRepository.GetBestSaleReport(day1, day2);
+        }
+
         public ReportByMonthDto GetReportByMonth(DateTime selectedMonth)
         {
             return _invoiceRepository.GetReportByMonth(selectedMonth);
