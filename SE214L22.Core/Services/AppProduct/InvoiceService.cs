@@ -72,28 +72,34 @@ namespace SE214L22.Core.Services.AppProduct
         {
             // 1. add custom?
             var phoneNumber = invoice.PhoneNumber;
-
+            invoice.CreationTime = DateTime.Now;
             // check if it's existing?
             var customer = _customerRepository.GetCustomByPhoneNumber(phoneNumber);
-            var customerId = -1;
+            var customerId = 1;
 
             if (customer == null)
             {
-                customer = new Customer { Name = invoice.CustomerName, PhoneNumber = phoneNumber, CreationTime = DateTime.Now, AccumulatedPoint = invoice.Price / 100000 };
-                if (customer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Vàng").PointLevel)
-                    customer.CustomerLevelId = 3;
-                else if (customer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Bạc").PointLevel)
-                    customer.CustomerLevelId = 2;
-                else
-                    customer.CustomerLevelId = 1;
-                var storedCustomer = _customerRepository.Create(customer);
-                customerId = storedCustomer.Id;
+                if(phoneNumber != null)
+                {
+                    customer = new Customer { Name = invoice.CustomerName, PhoneNumber = phoneNumber, CreationTime = DateTime.Now, AccumulatedPoint = invoice.Price / 100000 };
+                    if (customer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Vàng").PointLevel)
+                        customer.CustomerLevelId = 3;
+                    else if (customer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Bạc").PointLevel)
+                        customer.CustomerLevelId = 2;
+                    else
+                        customer.CustomerLevelId = 1;
+                    var storedCustomer = _customerRepository.Create(customer);
+                    customerId = storedCustomer.Id;
+                }
             }
             else
             {
                 customerId = customer.Id;
             }
-
+            if (customerId == 1)
+            {
+                invoice.Discount = 0;
+            }
             // 2. add invoice
             var storedInvoice = _invoiceRepository.Create(new Invoice
             {
@@ -114,7 +120,7 @@ namespace SE214L22.Core.Services.AppProduct
                     Number = product.SelectedNumber,
                     InvoiceId = storedInvoice.Id
                 };
-
+                product.TotalPrice = product.SelectedNumber * product.PriceOut;
                 _invoiceProductRepository.Create(invoiceProduct);
                 _productRepository.UpdateNumberById(product.Id, product.SelectedNumber);
             }

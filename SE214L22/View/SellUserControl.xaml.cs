@@ -40,8 +40,9 @@ namespace SE214L22.View
             if (result == MessageBoxResult.OK && command.CanExecute(null))
             {
                 command.Execute(true);
-                var commandReloadHomeScreen = btnReloadHomeScreen.Command;
-                if (commandReloadHomeScreen.CanExecute(null)) commandReloadHomeScreen.Execute(null);
+                //var commandReloadHomeScreen = btnReloadHomeScreen.Command;
+                //if (commandReloadHomeScreen.CanExecute(null)) commandReloadHomeScreen.Execute(null);
+                new PrintBillWindow().ShowDialog();
             }
             else if (result != MessageBoxResult.OK && command.CanExecute(null))
             {

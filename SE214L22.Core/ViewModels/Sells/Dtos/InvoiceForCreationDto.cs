@@ -23,5 +23,6 @@ namespace SE214L22.Core.ViewModels.Sells.Dtos
         public int Price { get => _price; set { _price = value; OnPropertyChanged(); } }
         public string CustomerLevel { get => _customerLevel; set { _customerLevel = value; OnPropertyChanged(); } }
 
+        public DateTime CreationTime { get; set; }
     }
 }

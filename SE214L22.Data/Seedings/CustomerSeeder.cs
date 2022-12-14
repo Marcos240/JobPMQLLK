@@ -19,6 +19,15 @@ namespace SE214L22.Data.Seedings
                     new Customer
                     {
                         Id = 1,
+                        Name = "Khách lẻ",
+                        PhoneNumber = null,
+                        CustomerLevelId = 1,
+                        AccumulatedPoint = 0,
+                        CreationTime = DateTime.Now
+                    },
+                    new Customer
+                    {
+                        Id = 2,
                         Name = "Nguyễn Thanh Hoa",
                         PhoneNumber = "0123434565",
                         CustomerLevelId = 1,
@@ -27,7 +36,7 @@ namespace SE214L22.Data.Seedings
                     },
                     new Customer
                     {
-                        Id = 2,
+                        Id = 3,
                         Name = "Nguyễn Xuân Tú",
                         PhoneNumber = "0123434365",
                         CustomerLevelId = 1,
@@ -36,7 +45,7 @@ namespace SE214L22.Data.Seedings
                     },
                     new Customer
                     {
-                        Id = 3,
+                        Id = 4,
                         Name = "Lê Anh Tuấn",
                         PhoneNumber = "0723434365",
                         CustomerLevelId = 1,
@@ -45,103 +54,13 @@ namespace SE214L22.Data.Seedings
                     },
                     new Customer
                     {
-                        Id = 4,
+                        Id = 5,
                         Name = "Lê Xuân Tùng",
                         PhoneNumber = "0723434366",
                         CustomerLevelId = 1,
                         AccumulatedPoint = 0,
                         CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 5,
-                        Name = "Nguyễn Thanh Tuấn",
-                        PhoneNumber = "0723434266",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 6,
-                        Name = "Vũ Duy Khách",
-                        PhoneNumber = "0723134366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 7,
-                        Name = "Đào Xuân Tùns",
-                        PhoneNumber = "0713434333",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 8,
-                        Name = "Nguyễn Nhật Chiêu",
-                        PhoneNumber = "0723404366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 9,
-                        Name = "Cao Thị Trang",
-                        PhoneNumber = "0723334366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 10,
-                        Name = "Lưu Văn Bình",
-                        PhoneNumber = "0721134366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 11,
-                        Name = "Nguyễn Nhật Chưởng",
-                        PhoneNumber = "0723434996",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 12,
-                        Name = "Võ Kim Sơn",
-                        PhoneNumber = "0723224366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 13,
-                        Name = "Lê Xuân Tuấn",
-                        PhoneNumber = "0723224366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },
-                    new Customer
-                    {
-                        Id = 14,
-                        Name = "Lê Xuân Tiến",
-                        PhoneNumber = "0723434366",
-                        CustomerLevelId = 1,
-                        AccumulatedPoint = 0,
-                        CreationTime = DateTime.Now
-                    },                    
+                    },                
                 };
             }
         }

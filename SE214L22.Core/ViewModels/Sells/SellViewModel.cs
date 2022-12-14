@@ -97,7 +97,7 @@ namespace SE214L22.Core.ViewModels.Sells
 
             SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
 
-            Invoice = new InvoiceForCreationDto { Total = 0 };
+            Invoice = new InvoiceForCreationDto { Total = 0, CustomerName="Khách lẻ" };
 
 
             // command
@@ -189,25 +189,32 @@ namespace SE214L22.Core.ViewModels.Sells
                         _invoiceService.AddInvoice(Invoice, SelectedProducts.ToList());
 
                         //Update AccumulatedPoint of customer
-                        var customer = _customerService.GetCustomerByPhone(Invoice.PhoneNumber);
-                        CustomerDisplayDto updatedCustomer;
-                        updatedCustomer = Mapper.Map<CustomerDisplayDto>(customer);
-                        updatedCustomer.AccumulatedPoint += Invoice.Price / 100000;
-                        //Check and Update AccumulatedPoint
-                        if (updatedCustomer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Vàng").PointLevel)
-                            updatedCustomer.CustomerLevelId = 3;
-                        else if (updatedCustomer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Bạc").PointLevel)
-                            updatedCustomer.CustomerLevelId = 2;
-                        else
-                            updatedCustomer.CustomerLevelId = 1;
-                        _customerService.UpdateCustomer(updatedCustomer);
+                       
+                            var customer = _customerService.GetCustomerByPhone(Invoice.PhoneNumber);
+                            if(customer.Id != 1)
+                            {
+                                CustomerDisplayDto updatedCustomer;
+                                updatedCustomer = Mapper.Map<CustomerDisplayDto>(customer);
 
-                        // reset data
-                        SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
-                        Invoice = new InvoiceForCreationDto();
-                        ReportViewModel.getInstance().Update();
-                        CustomerViewModel.getInstance().LoadListCustomers();
-                        MessageBox.Show("Thanh toán hành công");
+                                updatedCustomer.AccumulatedPoint += Invoice.Price / 100000;
+                                //Check and Update AccumulatedPoint
+                                if (updatedCustomer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Vàng").PointLevel)
+                                    updatedCustomer.CustomerLevelId = 3;
+                                else if (updatedCustomer.AccumulatedPoint >= _customerLevelRepository.GetCustomerLevelByName("Hạng Bạc").PointLevel)
+                                    updatedCustomer.CustomerLevelId = 2;
+                                else
+                                    updatedCustomer.CustomerLevelId = 1;
+                                _customerService.UpdateCustomer(updatedCustomer);
+                             }
+                            
+
+                            // reset data
+                            //SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
+                            //Invoice = new InvoiceForCreationDto();
+                            ReportViewModel.getInstance().Update();
+                            CustomerViewModel.getInstance().LoadListCustomers();
+                            MessageBox.Show("Thanh toán hành công");
+                     
                     }
 
                 }
@@ -225,6 +232,7 @@ namespace SE214L22.Core.ViewModels.Sells
                         SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
                         _storedSelectedProducts = new ObservableCollection<ProductForSellDto>();
                         Invoice = new InvoiceForCreationDto();
+                        Invoice.CustomerName = "Khách lẻ";
                     }
 
                 }
@@ -249,6 +257,12 @@ namespace SE214L22.Core.ViewModels.Sells
             );
         }
 
+        public void resetValue()
+        {
+            SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
+            _storedSelectedProducts = new ObservableCollection<ProductForSellDto>();
+            Invoice = new InvoiceForCreationDto();
+        }
         private bool CanAddMoreItem(object p)
         {
             if (p != null)
@@ -366,7 +380,13 @@ namespace SE214L22.Core.ViewModels.Sells
             var customer = _customerService.GetCustomerByPhone(Invoice.PhoneNumber);
             if (customer != null)
             {
-                Invoice.Discount = (int)customer.CustomerLevel.Discount * Invoice.Total / 100;
+                if(customer.Id != 1) {
+                    Invoice.Discount = (int)customer.CustomerLevel.Discount * Invoice.Total / 100;
+                }
+                else
+                {
+                    Invoice.Discount = 0;
+                }
                 Invoice.Price = Invoice.Total - Invoice.Discount;
             }
             else
