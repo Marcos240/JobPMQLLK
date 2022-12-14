@@ -134,7 +134,7 @@
                                               RenderingBias="Quality"
                                               ShadowDepth="1" />
                         </Grid.Effect>
-                        <materialDesign:PackIcon Kind="HomeCurrencyUsd"
+                        <materialDesign:PackIcon Kind="CurrencyUsd"
                                                  HorizontalAlignment="Center"
                                                  VerticalAlignment="Bottom"
                                                  Margin="5"

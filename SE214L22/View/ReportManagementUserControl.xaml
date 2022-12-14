@@ -228,10 +228,10 @@
                                     <DataGridTextColumn Header="STT" Width="100"
                                                             IsReadOnly="True"
                                                             Binding="{Binding Index}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Tên mặt hàng" Width="400"
+                                    <DataGridTextColumn Header="Tên mặt hàng" Width="300"
                                                             IsReadOnly="True"
                                                             Binding="{Binding Name}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Loại mặt hàng" Width="200"
+                                    <DataGridTextColumn Header="Loại mặt hàng" Width="100"
                                                             IsReadOnly="True"
                                                             Binding="{Binding CategoryName}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Số lượng"
