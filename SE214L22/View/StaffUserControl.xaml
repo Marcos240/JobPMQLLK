@@ -203,12 +203,14 @@
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Tên Nhân Viên</Label>
-                                    <TextBox Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Name, Mode=OneWay}"/>
+                                    <TextBox IsReadOnly="True" Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Name, Mode=OneWay}"/>
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Chức Vụ</Label>
-                                    <ComboBox 
-                                        Style="{StaticResource UnderlineComboBox}"
+                                    <TextBox 
+                                        IsReadOnly="True"
+                                        Style="{StaticResource UnderlineTextBox}"
+                                        Text="{Binding ChosenUser.Role.Name}"
                                         Height="36"
                                         BorderBrush="#FF34268A"
                                         Margin="3"
@@ -218,23 +220,23 @@
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Email</Label>
-                                    <TextBox Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Email, Mode=OneWay}"/>
+                                    <TextBox IsReadOnly="True" Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Email, Mode=OneWay}"/>
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Ngày Vào Làm</Label>
-                                    <DatePicker Style="{StaticResource UnderlineDatePicker}" Text="{Binding ChosenUser.CreationTime, Mode=OneWay, StringFormat='dd/MM/yyyy'}" />
+                                    <DatePicker IsEnabled="False" Style="{StaticResource UnderlineDatePicker}" Text="{Binding ChosenUser.CreationTime, Mode=OneWay, StringFormat='dd/MM/yyyy'}" />
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Số Điện Thoại</Label>
-                                    <TextBox Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.PhoneNumber, Mode=OneWay}"/>
+                                    <TextBox IsReadOnly="True" Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.PhoneNumber, Mode=OneWay}"/>
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Ngày Sinh</Label>
-                                    <DatePicker Style="{StaticResource UnderlineDatePicker}" Text="{Binding ChosenUser.Dob, Mode=OneWay, StringFormat='dd/MM/yyyy'}" />
+                                    <DatePicker IsEnabled="False" Style="{StaticResource UnderlineDatePicker}" Text="{Binding ChosenUser.Dob, Mode=OneWay, StringFormat='dd/MM/yyyy'}" />
                                 </DockPanel>
                                 <DockPanel Height="73">
                                     <Label DockPanel.Dock="Top">Địa Chỉ</Label>
-                                    <TextBox Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Address, Mode=OneWay}"/>
+                                    <TextBox IsReadOnly="True" Style="{StaticResource UnderlineTextBox}" Text="{Binding ChosenUser.Address, Mode=OneWay}"/>
                                 </DockPanel>
                             </StackPanel>
                         </ScrollViewer>
