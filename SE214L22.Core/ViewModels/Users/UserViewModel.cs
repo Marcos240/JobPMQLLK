@@ -6,7 +6,6 @@ using SE214L22.Data.Entity.AppUser;
 using SE214L22.Shared.AppConsts;
 using SE214L22.Shared.Permissions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -102,13 +101,21 @@ namespace SE214L22.Core.ViewModels.Users
                     {
                         if (EditingUser.Id == null)
                             _userService.AddUser(EditingUser);
-                        else
+                        else {
+                            EditingUser.PassWord = ChosenUser.Password;
                             _userService.UpdateUser(EditingUser, ChosenUser);
+                            if(EditingUser.Id == Session.CurrentUser.Id)
+                            {
+                                var user = _userService.GetUser((int)EditingUser.Id);
+                                Session.SetSessionUser(user);
+                            }
+                        }
 
                         Users = new ObservableCollection<User>(_userService.GetUsers());
                     }
                 }
             );
+            
 
             SelectPhoto = new RelayCommand<object>
             (

@@ -33,6 +33,7 @@ namespace SE214L22.View
             {
                 command.Execute(true);
                 MessageBox.Show("Lưu thông tin thành công!");
+                btnAfterSave.Command.Execute(null);
                 this.Close();
             }
             else if (result != MessageBoxResult.OK && command.CanExecute(null))

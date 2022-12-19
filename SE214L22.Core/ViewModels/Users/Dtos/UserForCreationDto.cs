@@ -17,6 +17,7 @@ namespace SE214L22.Core.ViewModels.Users.Dtos
         private DateTime _creationTime;
         private string _email;
         private string _photo;
+        private string _passWord;
 
         public int? Id { get => _id; set { _id = value; OnPropertyChanged(); } }
         public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
@@ -27,5 +28,6 @@ namespace SE214L22.Core.ViewModels.Users.Dtos
         public DateTime CreationTime { get => _creationTime; set { _creationTime = value; OnPropertyChanged(); } }
         public string Email { get => _email; set { _email = value; OnPropertyChanged(); } }
         public string Photo { get => _photo; set { _photo = value; OnPropertyChanged(); } }
+        public string PassWord { get => _passWord; set { _passWord = value; OnPropertyChanged(); } }
     }
 }
