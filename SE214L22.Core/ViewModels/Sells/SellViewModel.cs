@@ -487,6 +487,8 @@ namespace SE214L22.Core.ViewModels.Sells
                 excel.Visible = true;
                 Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
                 Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
+                reportSheet.Range["E2:E1000"].NumberFormat = "#,##0";
+                reportSheet.Range["F2:F1000"].NumberFormat = "#,##0";
 
                 for (int j = 0; j < 7; j++)
                 {

@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Office.Interop.Excel;
 using SE214L22.Core.Services.AppProduct;
 using SE214L22.Shared.Dtos;
@@ -248,6 +249,11 @@ namespace SE214L22.Core.ViewModels.Reports
                 excel.Visible = true;
                 Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
                 Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
+                reportSheet.Range["B2:B1000"].NumberFormat = "#,##0";
+                reportSheet.Range["E2:E1000"].NumberFormat = "#,##0";
+                reportSheet.Range["F2:F1000"].NumberFormat = "#,##0";
+                reportSheet.Range["G2:G1000"].NumberFormat = "#,##0";
+
 
                 for (int j = 0; j < 7; j++)
                 {
@@ -257,7 +263,7 @@ namespace SE214L22.Core.ViewModels.Reports
                     switch(j)
                     {
                         case 0:
-                            reportRange.Value2 = "STT";
+                            reportRange.Value2 = "STT"; 
                             break;
                         case 1:
                             reportRange.Value2 = "Mã sản phẩm";
@@ -312,10 +318,14 @@ namespace SE214L22.Core.ViewModels.Reports
                         }
                     }
                 }
-                Range revenueRange = (Range)reportSheet.Cells[2 + Products.Count, 1];
+                Range revenueRangeText = (Range)reportSheet.Cells[2 + Products.Count, 1];
                 ((Range)reportSheet.Cells[2 + Products.Count, 1]).Font.Bold = true;
                 ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
-                revenueRange.Value2 = "Tổng Doanh Thu: " + TotalRevenue;
+                revenueRangeText.Value2 = "Tổng Doanh Thu";
+                Range revenueRangeValue = (Range)reportSheet.Cells[2 + Products.Count, 2];
+                ((Range)reportSheet.Cells[2 + Products.Count, 1]).Font.Bold = true;
+                ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
+                revenueRangeValue.Value2 = TotalRevenue;
 
             }
             catch (Exception e)
@@ -333,6 +343,9 @@ namespace SE214L22.Core.ViewModels.Reports
                 excel.Visible = true;
                 Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
                 Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
+                reportSheet.Range["B2:B1000"].NumberFormat = "#,##0";
+                reportSheet.Range["C2:C1000"].NumberFormat = "#,##0";
+                reportSheet.Range["D2:D1000"].NumberFormat = "#,##0";
 
                 for (int j = 0; j < 4; j++)
                 {
@@ -379,14 +392,25 @@ namespace SE214L22.Core.ViewModels.Reports
                         }
                     }
                 }
-                Range revenueRange = (Range)reportSheet.Cells[2 + DayStatistics.Count, 1];
+                Range revenueRangeText = (Range)reportSheet.Cells[2 + DayStatistics.Count, 1];
                 ((Range)reportSheet.Cells[2 + DayStatistics.Count, 1]).Font.Bold = true;
                 ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
-                revenueRange.Value2 = "Tổng Doanh Thu: " + TotalRevenue;
-                Range profitRange = (Range)reportSheet.Cells[3 + DayStatistics.Count, 1];
+                revenueRangeText.Value2 = "Tổng Doanh Thu";
+
+                Range revenueRangeValue = (Range)reportSheet.Cells[2 + DayStatistics.Count, 2];
+                ((Range)reportSheet.Cells[2 + DayStatistics.Count, 1]).Font.Bold = true;
+                ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
+                revenueRangeValue.Value2 = TotalRevenue;
+
+                Range profitRangeText = (Range)reportSheet.Cells[3 + DayStatistics.Count, 1];
                 ((Range)reportSheet.Cells[3 + DayStatistics.Count, 1]).Font.Bold = true;
                 ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
-                profitRange.Value2 = "Tổng Lợi Nhuận: " + TotalProfit;
+                profitRangeText.Value2 = "Tổng Lợi Nhuận: ";
+
+                Range profitRangeValue = (Range)reportSheet.Cells[3 + DayStatistics.Count, 2];
+                ((Range)reportSheet.Cells[3 + DayStatistics.Count, 1]).Font.Bold = true;
+                ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
+                profitRangeValue.Value2 = TotalProfit;
 
             }
             catch (Exception e)
@@ -405,6 +429,10 @@ namespace SE214L22.Core.ViewModels.Reports
                 excel.Visible = true;
                 Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
                 Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
+
+                reportSheet.Range["B2:B1000"].NumberFormat = "#,##0";
+                reportSheet.Range["F2:F1000"].NumberFormat = "#,##0";
+                reportSheet.Range["G2:G1000"].NumberFormat = "#,##0";
 
                 for (int j = 0; j < 7; j++)
                 {
@@ -472,7 +500,12 @@ namespace SE214L22.Core.ViewModels.Reports
                 Range revenueRange = (Range)reportSheet.Cells[2 + Products.Count, 1];
                 ((Range)reportSheet.Cells[2 + Products.Count, 1]).Font.Bold = true;
                 ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
-                revenueRange.Value2 = "Tổng Doanh Thu: " + TotalRevenue;
+                revenueRange.Value2 = "Tổng Doanh Thu: ";
+
+                Range revenueRangeValue = (Range)reportSheet.Cells[2 + Products.Count, 2];
+                ((Range)reportSheet.Cells[2 + Products.Count, 1]).Font.Bold = true;
+                ((Range)reportSheet.Columns[1]).ColumnWidth = 15;
+                revenueRangeValue.Value2 =  TotalRevenue;
 
             }
             catch (Exception e)
