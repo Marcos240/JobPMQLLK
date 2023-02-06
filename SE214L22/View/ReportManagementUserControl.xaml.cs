@@ -32,6 +32,7 @@ namespace SE214L22.View
             searchMode.Items.Add("Theo tháng");
             searchMode.Items.Add("Theo quý");
             searchMode.Items.Add("Theo năm");
+            searchMode.Items.Add("Theo khoảng thời gian");
             searchMode.SelectedIndex = 0;
         }
 
@@ -47,6 +48,9 @@ namespace SE214L22.View
                 searchQuaterArea.Visibility = Visibility.Hidden;
                 searchYear.IsEnabled = false;
                 searchYearArea.Visibility = Visibility.Hidden;
+                fromDay.IsEnabled = false;
+                toDay.IsEnabled = false;
+                searchFromToDay.Visibility = Visibility.Hidden;
             }
             else if (searchMode.SelectedIndex == 1)
             {
@@ -58,6 +62,9 @@ namespace SE214L22.View
                 searchQuaterArea.Visibility = Visibility.Hidden;
                 searchYear.IsEnabled = false;
                 searchYearArea.Visibility = Visibility.Hidden;
+                fromDay.IsEnabled = false;
+                toDay.IsEnabled = false;
+                searchFromToDay.Visibility = Visibility.Hidden;
             }
             else if (searchMode.SelectedIndex == 2)
             {
@@ -69,8 +76,11 @@ namespace SE214L22.View
                 searchQuaterArea.Visibility= Visibility.Visible;
                 searchYear.IsEnabled = false;
                 searchYearArea.Visibility = Visibility.Hidden;
+                fromDay.IsEnabled = false;
+                toDay.IsEnabled = false;
+                searchFromToDay.Visibility = Visibility.Hidden;
             }
-            else
+            else if (searchMode.SelectedIndex == 3)
             {
                 searchDay.IsEnabled = false;
                 searchDayArea.Visibility = Visibility.Hidden;
@@ -80,6 +90,23 @@ namespace SE214L22.View
                 searchQuaterArea.Visibility = Visibility.Hidden;
                 searchYear.IsEnabled = true;
                 searchYearArea.Visibility = Visibility.Visible;
+                fromDay.IsEnabled = false;
+                toDay.IsEnabled = false;
+                searchFromToDay.Visibility = Visibility.Hidden;
+            }    
+            else
+            {
+                searchDay.IsEnabled = false;
+                searchDayArea.Visibility = Visibility.Hidden;
+                searchMonth.IsEnabled = false;
+                searchMonthArea.Visibility = Visibility.Hidden;
+                searchQuater.IsEnabled = false;
+                searchQuaterArea.Visibility = Visibility.Hidden;
+                searchYear.IsEnabled = false;
+                searchYearArea.Visibility = Visibility.Hidden;
+                fromDay.IsEnabled= true;
+                toDay.IsEnabled= true;
+                searchFromToDay.Visibility= Visibility.Visible;
             }    
         }
 
@@ -116,6 +143,13 @@ namespace SE214L22.View
                 searchYear.Items.Add(i);
             }
             //searchYear.SelectedIndex = 0;
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
         }
     }
 }

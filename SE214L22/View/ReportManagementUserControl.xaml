@@ -8,12 +8,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="#fff"
-             DataContext="{StaticResource ReportViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid>
         <controls:MetroAnimatedTabControl x:Name="AnimatedTabControl">
-            <controls:MetroTabItem Header="Báo cáo danh sách sản phẩm đã bán" Height="40">
+            <controls:MetroTabItem DataContext="{StaticResource ReportViewModel}" Header="Báo cáo danh sách sản phẩm đã bán" Height="40">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
@@ -87,7 +86,6 @@
 
                                 </DatePicker>
                             </Border>
-
                         </StackPanel>
 
                         <!--Chọn báo cáo theo tháng-->
@@ -192,6 +190,65 @@
                             </Border>
                         </StackPanel>
 
+                        <!--Chọn báo cáo theo khoảng thời gian-->
+                        <StackPanel
+                            Name="searchFromToDay"
+                            Visibility="Visible"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="120">
+                                <DatePicker SelectedDate="{Binding SearchFromDay, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                    Name="fromDay"
+                                    materialDesign:HintAssist.Hint="Chọn ngày bắt đầu"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Height="35.2" >
+
+                                </DatePicker>
+                            </Border>
+
+                            <Border 
+                                BorderThickness="0"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="40">
+                                <TextBlock Text="đến">
+                                </TextBlock>
+                            </Border>
+                            
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="120">
+                                <DatePicker SelectedDate="{Binding SearchToDay, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                    Name="toDay"
+                                    materialDesign:HintAssist.Hint="Chọn ngày kết thúc"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Height="35.2" >
+
+                                </DatePicker>
+                            </Border>
+
+                        </StackPanel>
                         <Button Background="DarkGreen"
                                     BorderThickness="0"
                                     Command="{Binding CBestSaleReportToExcel}"
@@ -231,7 +288,7 @@
                                     <DataGridTextColumn Header="Tên mặt hàng" Width="300"
                                                             IsReadOnly="True"
                                                             Binding="{Binding Name}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Loại mặt hàng" Width="100"
+                                    <DataGridTextColumn Header="Loại mặt hàng" Width="200"
                                                             IsReadOnly="True"
                                                             Binding="{Binding CategoryName}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Số lượng"
@@ -249,7 +306,7 @@
                     </materialDesign:Card>
                 </Grid>
             </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Doanh thu theo ngày">
+            <controls:MetroTabItem DataContext="{StaticResource ReportViewModel}" Header="Doanh thu theo ngày">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
@@ -355,7 +412,7 @@
                     </materialDesign:Card>
                 </Grid>
             </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Doanh thu theo tháng">
+            <controls:MetroTabItem DataContext="{StaticResource ReportViewModel}" Header="Doanh thu theo tháng">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
@@ -459,6 +516,72 @@
                         </GroupBox>
                     </materialDesign:Card>
                 </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem DataContext="{StaticResource SellViewModel}" Header="Báo cáo tồn kho hiện tại">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Background="DarkGreen"
+                                BorderThickness="0"
+                                Command="{Binding CInventoryReportToExcel}"
+                                Grid.Column="3"
+                                Height="42"
+                                Padding="5 5 5 0"
+                                Width="150"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                ToolTip="Xuất báo cáo ra file Excel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Xuất Báo Cáo"
+                                           VerticalAlignment="Center"
+                                           FontSize="16"
+                                           Margin="0 0 5 0" />
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                         Kind="FileExcel"
+                                                         Width="24"
+                                                         Height="24" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <GroupBox Grid.Row="1" Header="Danh sách mặt hàng"
+                              Margin="5 0 5 5">
+                            <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                                      VerticalScrollBarVisibility="Auto">
+                                <DataGrid ItemsSource="{Binding Products}"
+                                      SelectionMode="Single"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      Grid.ColumnSpan="1"
+                                      BorderThickness="1"
+                                      materialDesign:DataGridAssist.CellPadding="4"
+                                      materialDesign:DataGridAssist.ColumnHeaderPadding="10">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Mã sản phẩm"
+                                                        Binding="{Binding Id}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Tên sản phẩm" Width="300"
+                                                        Binding="{Binding Name}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Loại mặt hàng" Width="150"
+                                                        Binding="{Binding CategoryName}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Nhà sản xuất" Width="150"
+                                                        Binding="{Binding ManufacturerName}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Giá bán" Width="200"
+                                                        Binding="{Binding PriceOut, StringFormat={}{0:#,##0} đ}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Số lượng tồn" Width="100"
+                                                        Binding="{Binding Number}"></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
+                
             </controls:MetroTabItem>
         </controls:MetroAnimatedTabControl>
         <!--<Grid Grid.RowSpan="2" DataContext="{StaticResource SessionViewModel}" Background="#fff" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

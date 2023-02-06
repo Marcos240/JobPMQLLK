@@ -1,5 +1,7 @@
 ﻿using SE214L22.Data.Entity.AppCustomer;
+using SE214L22.Data.Entity.AppProduct;
 using SE214L22.Shared.Dtos;
+using SE214L22.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

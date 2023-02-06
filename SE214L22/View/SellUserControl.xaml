@@ -119,7 +119,7 @@
                                     <DataGridTextColumn Header="Số lượng"
                                                         Binding="{Binding Number}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Giá bán"
-                                                        Binding="{Binding PriceOut}"></DataGridTextColumn>
+                                                        Binding="{Binding PriceOut, StringFormat={}{0:#,##0} đ}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </ScrollViewer>
@@ -197,7 +197,7 @@
                                 <DataGridTextColumn Header="Tên SP"
                                                     Binding="{Binding Name}" />
                                 <DataGridTextColumn Header="Giá bán"
-                                                    Binding="{Binding PriceOut}" />
+                                                    Binding="{Binding PriceOut, StringFormat={}{0:#,##0} đ}" />
                                 <DataGridTextColumn Header="Số lượng"
                                                     Binding="{Binding SelectedNumber}" />
                             </DataGrid.Columns>
@@ -264,7 +264,7 @@
                                  Style="{StaticResource UnderlineTextBox}"
                                  Height="30">
                             <TextBox.Text>
-                                <Binding Path="Invoice.Total">
+                                <Binding Path="Invoice.Total" >
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
@@ -343,7 +343,7 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="btnHuyBo"
-                        Command="{Binding ResetInput}"
+                        Command="{Binding ResetInputCancel}"
                         Click="btnHuyBo_Click"
                         Grid.Column="0"
                         Foreground="Black"
@@ -391,7 +391,7 @@
             </Grid>
 
         </Grid>
-        <Grid Grid.ColumnSpan="2" DataContext="{StaticResource SessionViewModel}" Background="#fff" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <!--<Grid Grid.ColumnSpan="2" DataContext="{StaticResource SessionViewModel}" Background="#fff" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="../Assets/unauthorized.png" Width="200" Height="200" />
                 <TextBlock FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">Bạn không có quyền truy cập màn hình này! Vui lòng đăng nhập với tài khoản thích hợp!</TextBlock>
@@ -399,6 +399,6 @@
             <Grid.Visibility>
                 <Binding Path="UserPerrmissions" Converter="{StaticResource FeaturePermissionConverter}" ConverterParameter="Sale" />
             </Grid.Visibility>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

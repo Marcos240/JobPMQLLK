@@ -1,4 +1,5 @@
-﻿using SE214L22.Core.Services.AppCustomer;
+﻿using Microsoft.Office.Interop.Excel;
+using SE214L22.Core.Services.AppCustomer;
 using SE214L22.Core.Services.AppProduct;
 using SE214L22.Core.ViewModels.Customers;
 using SE214L22.Core.ViewModels.Products.Dtos;
@@ -79,7 +80,9 @@ namespace SE214L22.Core.ViewModels.Sells
         public ICommand RemoveItem { get; set; }
         public ICommand SaveInvoice { get; set; }
         public ICommand ResetInput { get; set; }
+        public ICommand ResetInputCancel { get; set; }
         public ICommand GetCustomer { get; set; }
+        public ICommand CInventoryReportToExcel { get; set; }
 
         public SellViewModel()
         {
@@ -98,6 +101,7 @@ namespace SE214L22.Core.ViewModels.Sells
             SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
 
             Invoice = new InvoiceForCreationDto { Total = 0, CustomerName="Khách lẻ" };
+            CInventoryReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { InventoryReportToExcel(); });
 
 
             // command
@@ -214,7 +218,9 @@ namespace SE214L22.Core.ViewModels.Sells
                             ReportViewModel.getInstance().Update();
                             CustomerViewModel.getInstance().LoadListCustomers();
                             MessageBox.Show("Thanh toán hành công");
-                     
+                            ReloadProducts();
+
+
                     }
 
                 }
@@ -228,7 +234,6 @@ namespace SE214L22.Core.ViewModels.Sells
                     if (p != null && (bool)p)
                     {
                         // reset input
-                        ResetProductNumbers();
                         SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
                         _storedSelectedProducts = new ObservableCollection<ProductForSellDto>();
                         Invoice = new InvoiceForCreationDto();
@@ -237,6 +242,24 @@ namespace SE214L22.Core.ViewModels.Sells
 
                 }
             );
+
+            ResetInputCancel = new RelayCommand<object>
+           (
+               p => true,
+               p =>
+               {
+                   if (p != null && (bool)p)
+                   {
+                       // reset input
+                       ResetProductNumbers();
+                       SelectedProducts = new ObservableCollection<SelectingProductForSellDto>();
+                       _storedSelectedProducts = new ObservableCollection<ProductForSellDto>();
+                       Invoice = new InvoiceForCreationDto();
+                       Invoice.CustomerName = "Khách lẻ";
+                   }
+
+               }
+           );
 
             GetCustomer = new RelayCommand<object>
             (
@@ -448,11 +471,87 @@ namespace SE214L22.Core.ViewModels.Sells
             {
                 var storedProduct = _loadedProducts.Where(x => x.Id == item.Id).FirstOrDefault();
                 //var displayedProduct = Products.Where(x => x.Id == item.Id).FirstOrDefault();
-
-                storedProduct.Number += item.SelectedNumber;
+                if (storedProduct != null )
+                {
+                    storedProduct.Number += item.SelectedNumber;
+                }
+                
                 //displayedProduct.Number += item.Number;
             }
         }
+        private void InventoryReportToExcel()
+        {
+            try
+            {
+                Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+                excel.Visible = true;
+                Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+                Worksheet reportSheet = (Worksheet)workbook.Sheets[1];
 
+                for (int j = 0; j < 7; j++)
+                {
+                    Range reportRange = (Range)reportSheet.Cells[1, j + 1];
+                    ((Range)reportSheet.Cells[1, j + 1]).Font.Bold = true;
+                    ((Range)reportSheet.Columns[j + 1]).ColumnWidth = 15;
+                    switch (j)
+                    {
+                        case 0:
+                            reportRange.Value2 = "Mã sản phẩm";
+                            break;
+                        case 1:
+                            reportRange.Value2 = "Tên mặt hàng";
+                            break;
+                        case 2:
+                            reportRange.Value2 = "Loại mặt hàng";
+                            break;
+                        case 3:
+                            reportRange.Value2 = "Nhà sản xuất";
+                            break;
+                        case 4:
+                            reportRange.Value2 = "Giá bán";
+                            break;
+                        case 5:
+                            reportRange.Value2 = "Số lượng tồn";
+                            break;
+
+                    }
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < Products.Count; j++)
+                    {
+                        Range reportRange = (Range)reportSheet.Cells[j + 2, i + 1];
+                        switch (i)
+                        {
+                            case 0:
+                                reportRange.Value2 = Products[j].Id;
+                                break;
+                            case 1:
+                                reportRange.Value2 = Products[j].Name;
+                                break;
+                            case 2:
+                                reportRange.Value2 = Products[j].CategoryName;
+                                break;
+                            case 3:
+                                reportRange.Value2 = Products[j].ManufacturerName;
+                                break;
+                            case 4:
+                                reportRange.Value2 = Products[j].PriceOut;
+                                break;
+                            case 5:
+                                reportRange.Value2 = Products[j].Number;
+                                break;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Không thể xuất file excel!" + e.ToString());
+            }
+
+
+        }
     }
 }

@@ -34,12 +34,15 @@ namespace SE214L22.Core.ViewModels.Reports
         private int _totalRevenue;
         private int _totalProfit;
         private ObservableCollection<ItemReportByMonthDto> _dayStatistics;
+        private ObservableCollection<ItemReportByMonthDto> _inventoryStatistics;
 
         //Report list Product
         private DateTime _searchDate;
         private int _searchMonth;
         private int _searchQuarter;
         private int _searchYear;
+        private DateTime _searchFromDay;
+        private DateTime _searchToDay;
 
         // public property for best sale product list report
         public DateTime SearchDate
@@ -86,6 +89,30 @@ namespace SE214L22.Core.ViewModels.Reports
                 DateTime firstDay = new DateTime(SearchYear, 1, 1);
                 DateTime lastDay = new DateTime(SearchYear, 12, 31);
                 LoadBestSaleReport(firstDay, lastDay);
+            }
+        }
+
+        public DateTime SearchFromDay
+        {
+            get => _searchFromDay;
+            set
+            {
+                _searchFromDay = value;
+                OnPropertyChanged();
+                if(_searchFromDay > _searchToDay) { SearchToDay= value; }
+                LoadBestSaleReport(SearchFromDay, SearchToDay);
+            }
+        }
+
+        public DateTime SearchToDay
+        {
+            get => _searchToDay;
+            set
+            {
+                _searchToDay = value;
+                OnPropertyChanged();
+                if (_searchFromDay > _searchToDay) { SearchFromDay = value; }
+                LoadBestSaleReport(SearchFromDay, SearchToDay);
             }
         }
 
@@ -144,6 +171,16 @@ namespace SE214L22.Core.ViewModels.Reports
             }
         }
 
+        public ObservableCollection<ItemReportByMonthDto> InventoryStatistics
+        {
+            get => _inventoryStatistics;
+            set
+            {
+                _inventoryStatistics = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void Update()
         {
             LoadReportByDay();
@@ -164,6 +201,8 @@ namespace SE214L22.Core.ViewModels.Reports
             SearchDate = DateTime.Now;
             SelectedDate = DateTime.Now;
             SelectedMonth = DateTime.Now;
+            SearchFromDay= DateTime.Now;
+            SearchToDay= DateTime.Now;
             CDayReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { DayReportToExcel(); });
             CMonthReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { MonthReportToExcel(); });
             CBestSaleReportToExcel = new RelayCommand<object>((p) => { return true; }, (p) => { BestSaleReportToExcel(); });
@@ -171,13 +210,20 @@ namespace SE214L22.Core.ViewModels.Reports
 
         private void LoadBestSaleReport(DateTime date1, DateTime date2)
         {
-            var reportBestSale = _invoiceService.GetBestSaleReport(date1,date2);
-            Products = new ObservableCollection<ProductReportByDayDto>(reportBestSale.Products);
-            TotalDayRevenue = reportBestSale.TotalRevenue;
+            if (date1 > date2)
+                MessageBox.Show("Thời gian từ không thể lớn hơn thời gian đến. Vui lòng chọn lại thời gian phù hợp");
+            else
+            {
+                TotalRevenue = 0;
+                var reportBestSale = _invoiceService.GetBestSaleReport(date1, date2);
+                Products = new ObservableCollection<ProductReportByDayDto>(reportBestSale.Products);
+                TotalRevenue = reportBestSale.TotalRevenue;
+            }  
         }
 
         private void LoadReportByDay()
         {
+            TotalDayRevenue = 0;
             var reportByDay = _invoiceService.GetReportByDay(SelectedDate);
             Products = new ObservableCollection<ProductReportByDayDto>(reportByDay.Products);
             TotalDayRevenue = reportByDay.TotalRevenue;
@@ -185,6 +231,8 @@ namespace SE214L22.Core.ViewModels.Reports
 
         private void LoadReportByMonth()
         {
+            TotalRevenue = 0;
+            TotalProfit = 0;
             var reportByMonth = _invoiceService.GetReportByMonth(SelectedMonth);
             DayStatistics = new ObservableCollection<ItemReportByMonthDto>(reportByMonth.DayStatistics);
             TotalRevenue = reportByMonth.TotalRevenue;
